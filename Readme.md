@@ -4,7 +4,7 @@ Example usage:
 
 ```javascript
 var LineBuffer = require('line_buffer'),
-    fs = require('fs);
+    fs = require('fs');
 
 var lb = new LineBuffer();
 lb.on('line', console.log);

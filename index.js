@@ -8,15 +8,17 @@ function LineBuffer() {
     this._dataEvent = 'data';
     this.lineEvent = 'line';
     this.on(this._dataEvent, this.processBuffer);
+    const self = this;
+
+    this.write = function(data) {
+        self.buffer += data;
+        self.emit(self._dataEvent);
+        return self;
+    };
+
 }
 
 util.inherits(LineBuffer, EventEmitter);
-
-LineBuffer.prototype.write = function(data) {
-    this.buffer += data;
-    this.emit(this._dataEvent);
-    return this;
-};
 
 LineBuffer.prototype.processBuffer = function() {
     var index = this.buffer.indexOf(this.sep),

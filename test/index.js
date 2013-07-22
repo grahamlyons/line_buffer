@@ -26,12 +26,22 @@ tst('Two lines emitted', function() {
     var lb = new LineBuffer();
     var expectedLines = ['Hello', 'World'];
     var count = 0;
-    var expected = 2;
     lb.on('line', function(line) {
         count++;
     });
     expectedLines.forEach(function(line) {
         lb.write(line + '\n');
     });
-    assert.equal(expected, count);
+    assert.equal(expectedLines.length, count);
 });
+
+tst('Line emitted when subsequent data written', function() {
+    var lb = new LineBuffer();
+    var parts = ['Hello', 'World', 'Foo', 'Bar'];
+    lb.on('line', function(line) {
+        assert.equal(parts.join(''), line);
+    });
+    parts.forEach(lb.write);
+    lb.write('\n');
+});
+
